@@ -1,0 +1,32 @@
+/* src/App.css */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.weekdays-row, .week-row {
+  display: flex;
+}
+
+.weekday, .day-cell {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  margin: 2px;
+}
+
+select, input[type="number"] {
+  padding: 5px;
+  font-size: 16px;
+}

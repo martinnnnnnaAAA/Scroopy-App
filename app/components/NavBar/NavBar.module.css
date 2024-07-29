@@ -1,0 +1,100 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  margin-top: 0;
+}
+
+.left_section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.link {
+  font-size: 18px;
+  color: black;
+  text-decoration: none;
+}
+
+.middle_section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-left: 175px;
+}
+
+.right_section {
+  display: flex;
+  align-items: center;
+}
+
+.view_type_selector {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+.view_type_selector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"><path fill="none" stroke="%23333" stroke-width="2" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.view_type_selector::-ms-expand {
+  display: none;
+}
+
+.tab_button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tab_button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.balance {
+  font-size: 16px;
+  color: #0b72b9;
+  margin-left: 10px;
+}
+
+/* Additional styles for the select dropdown */
+.view_type_selector:focus {
+  outline: none;
+  border-color: #0b72b9;
+}
+
+.view_type_selector option {
+  padding: 10px;
+}

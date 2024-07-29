@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Ajusta este valor para controlar la distancia entre los elementos */
+}
+
+.select {
+  background: none;
+  border: none;
+  color: #000; /* Color de la letra */
+  font-size: 2em; /* Tamaño de la fuente más moderado */
+  font-weight: 700; /* Hace que la tipografía sea más gruesa */
+  font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
+  outline: none;
+  appearance: none; /* Elimina los estilos por defecto del navegador */
+  cursor: pointer; /* Cambia el cursor a pointer */
+  padding: 0; /* Remueve el padding */
+  position: relative; /* Necesario para posicionar el pseudo-elemento */
+}
+
+.select::after {
+  content: '▼';
+  font-size: 2em; /* Ajusta el tamaño de la flecha según sea necesario */
+  position: absolute;
+  right: -15px; /* Ajusta esta posición según sea necesario */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #0000FF; /* Color de la flecha */
+}
+
+.input {
+  background: none;
+  border: none;
+  color: #6DCFF6; /* Color de la letra */
+  font-size: 2em; /* Tamaño de la fuente más moderado */
+  font-weight: 700; /* Hace que la tipografía sea más gruesa */
+  font-family: 'Roboto', sans-serif; /* Aplica la fuente Roboto */
+  outline: none;
+  width: 100px; /* Ajusta el ancho del input según sea necesario */
+}

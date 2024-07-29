@@ -1,95 +1,53 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import React, { useState } from 'react';
+import Button from './components/Button/Button';
+import Calendario from './components/Calendario/Calendario';
+import Modal from './components/Modal/Modal';
+import EventForm from './components/EventForm/EventForm';
+import NavBar from './components/NavBar/NavBar';
+import { useEvents } from '@/hooks/useEvents'; // Asegúrate de que esta ruta sea correcta
 
-export default function Home() {
+const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth());
+  const { EventosDeUsuario } = useEvents({ id: 1 });
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAddEvent = (event) => {
+    // Aquí puedes manejar el evento agregado
+    alert(`Evento agregado: ${event.titulo} el ${event.fecha}`);
+    handleCloseModal();
+  };
+
+  const handleMonthChange = (newMonth) => {
+    setMonth(newMonth);
+  };
+
+  const handleYearChange = (newYear) => {
+    setYear(newYear);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div className="App">
+      <header>
+        <NavBar year={year} month={month} onMonthChange={handleMonthChange} onYearChange={handleYearChange} direccionA="Calendario" />
+        <Button text="Agregar Evento" onClick={handleOpenModal} />
+      </header>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <h2>Agregar Evento</h2>
+        <EventForm onSubmit={handleAddEvent} />
+      </Modal>
+      <Calendario year={year} month={month} events={EventosDeUsuario} />
+    </div>
   );
-}
+};
+
+export default Home;
