@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /*Obtener Tokens y Datos de Telegram
 Para enviar mensajes a Telegram, necesitas un bot token y el chat ID del destinatario.
@@ -30,6 +31,8 @@ Telegram:
 Obtén el Token del Bot a través de @BotFather.
 Obtén el Chat ID de los destinatarios para enviarles mensajes.
 Con estos pasos, deberías tener todo configurado para programar y enviar mensajes a través de Telegram usando tu aplicación Next.js y Node.js. Si tienes alguna pregunta o necesitas más ayuda, no dudes en preguntar. */
+=======
+>>>>>>> 164256db3f345d70f3c25cbee36e650d6f7147f5
 import React, { useState } from 'react';
 
 const EventScroopyMessage = () => {
@@ -43,7 +46,11 @@ const EventScroopyMessage = () => {
     const fecha = new Date(event.target.fecha.value); // Convertir la fecha a un objeto Date
     const hora = new Date(`${event.target.fecha.value}T${event.target.hora.value}`); // Combinar fecha y hora
     const color = event.target.color.value;
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 164256db3f345d70f3c25cbee36e650d6f7147f5
     // Enviar la información al backend
     try {
       const response = await fetch('/api/schedule-message', {
@@ -59,6 +66,7 @@ const EventScroopyMessage = () => {
           isAllDay
         }),
       });
+<<<<<<< HEAD
 
       if (response.ok) {
         alert('Mensaje programado con éxito');
@@ -70,6 +78,22 @@ const EventScroopyMessage = () => {
       alert('Error al programar el mensaje');
     }
   };
+=======
+  
+      const result = await response.json(); // Obtener la respuesta JSON
+  
+      if (response.ok) {
+        alert('Mensaje programado con éxito');
+      } else {
+        alert(`Error al programar el mensaje: ${result.error || 'Desconocido'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error al programar el mensaje: ${error.message}`);
+    }
+  };
+  
+>>>>>>> 164256db3f345d70f3c25cbee36e650d6f7147f5
 
   return (
     <form onSubmit={handleSubmit}>

@@ -7,6 +7,7 @@ import EventForm from './components/EventForm/EventForm';
 import NavBar from './components/NavBar/NavBar';
 import ScroopyMessageForm from './components/ScroopyMessageForm/ScroopyMessageForm'; // Importa el nuevo componente
 import { useEvents } from '@/hooks/useEvents'; // Asegúrate de que esta ruta sea correcta
+import EventScroopyMessage from './components/EventScroopyMessage/EventScroopyMessage';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,8 @@ const Home = () => {
   const [month, setMonth] = useState(new Date().getMonth());
   const { EventosDeUsuario } = useEvents({ id: 1 });
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (content) => {
+    setModalContent(content); // Establece el contenido del modal
     setIsModalOpen(true);
   };
 
