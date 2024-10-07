@@ -13,38 +13,41 @@ const NavBar = ({ year, month, onMonthChange, onYearChange, direccionA }) => {
         <Link href="/Calendario">
           <img src="/Images/Logo-Scroopy-Aran-Mazzeo.png" alt="Logo" className={styles.logo} />
         </Link>
-        <Link href={`/${direccionA}`} className={styles.link}> {direccionA}</Link>
+        <Link href={`/${direccionA.toLowerCase()}`} className={styles.link}> {direccionA}</Link>
       </div>
-      <div className={styles.middle_section}>
+      {direccionA != 'Tareas' &&(<div className={styles.middle_section}>
         <SelectorMesAno
           year={year}
           month={month}
           onMonthChange={onMonthChange}
           onYearChange={onYearChange}
         />
-      </div>
+      </div>)
+        
+      }
+      
       <div className={styles.right_section}>
-        <select
+      {direccionA != 'Tareas' &&(<select
           value={viewType}
           onChange={(e) => setViewType(e.target.value)}
           className={styles.view_type_selector}
         >
           <option value="Mes">Mes</option>
           <option value="Semana">Semana</option>
-        </select>
+        </select>)}
         <button
-          className={`${styles.tab_button} ${activeTab === "calendario" ? styles.active : ""}`}
+          className={`${styles.tab_button} ${direccionA === "calendario" ? styles.active : ""}`}
           onClick={() => setActiveTab("calendario")}
         >
-          {activeTab === "calendario" ? "Calendario" : <Link href="/calendario">Calendario</Link>}
+          {direccionA === "calendario" ? "Calendario" : <Link href="/calendario">Calendario</Link>}
         </button>
         <button
-          className={`${styles.tab_button} ${activeTab === "tareas" ? styles.active : ""}`}
+          className={`${styles.tab_button} ${direccionA === "tareas" ? styles.active : ""}`}
           onClick={() => setActiveTab("tareas")}
         >
-          {activeTab === "tareas" ? "Tareas" : <Link href="/tareas">Tareas</Link>}
+          {direccionA === "tareas" ? "Tareas" : <Link href="/tareas">Tareas</Link>}
         </button>
-        <span className={styles.balance}>$ 1.000.000</span>
+        {direccionA != 'Tareas' &&( <span className={styles.balance}>$ 1.000.000</span>)}
       </div>
     </nav>
   );

@@ -1,0 +1,22 @@
+/* .navList {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    padding: 0;
+  }
+ 
+  .navItem {
+    margin: 0 10px;
+  }
+ 
+  .navItem a {
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+  }
+ 
+  .navItem a:hover {
+    text-decoration: underline;
+  } */

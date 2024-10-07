@@ -134,7 +134,7 @@ const Home = () => {
           month={month} 
           onMonthChange={handleMonthChange} 
           onYearChange={handleYearChange} 
-          direccionA="Calendario" 
+          direccionA="calendario" 
         />
         <Button text="Agregar Evento" onClick={() => handleOpenModal(<EventForm onSubmit={handleAddEvent} />)} />
         <Button text="Enviar Scroopy Message" onClick={handleOpenMessageModal} />

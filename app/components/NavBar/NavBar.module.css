@@ -36,6 +36,7 @@
 .right_section {
   display: flex;
   align-items: center;
+  margin-right: 2%;
 }
 
 .view_type_selector {
