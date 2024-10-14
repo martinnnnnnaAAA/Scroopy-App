@@ -1,26 +1,24 @@
 // hooks/useReservation.js
-const puppeteer = require('puppeteer');
-
-export const useReservation = async (date, time) => {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-
+export const useReservation = async ({ name, phone, date, time, guests }) => {
+    alert('si')
     try {
-        await page.goto('https://reservaskansas.com.ar/al-rio/');
-        
-        // Simula seleccionar fecha y hora en el sitio web
-        await page.evaluate((date, time) => {
-            // Ajusta estos selectores de acuerdo al sitio real
-            document.querySelector('input[name="date"]').value = date;
-            document.querySelector('select[name="time"]').value = time;
-        }, date, time);
-
-        // Finaliza la reserva
-        await page.click('button[type="submit"]'); // Ajusta este selector según el botón de reserva real
-
+      const response = await fetch('../api/reservation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, phone, date, time, guests }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return { success: true, message: data.message };
+      } else {
+        throw new Error('Error al realizar la reserva.');
+      }
     } catch (error) {
-        console.error("Error al hacer la reserva:", error);
-    } finally {
-        await browser.close();
+      console.error(error);
+      return { success: false, message: 'Error al realizar la reserva.' };
     }
-};
+  };
+  

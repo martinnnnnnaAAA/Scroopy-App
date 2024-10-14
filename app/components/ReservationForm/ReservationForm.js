@@ -1,49 +1,56 @@
 // components/ReservationForm/ReservationForm.js
 import React, { useState } from 'react';
 
-const ReservationForm = ({ onSubmit }) => {
-    const [date, setDate] = useState('');
-    const [time, setTime] = useState('');
+const ReservationForm = ({ onSubmit, loading, error, onClose }) => {
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [guests, setGuests] = useState('');
 
-    const handleDateChange = (e) => {
-        setDate(e.target.value);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const reservationData = { name, date, time, guests };
+    onSubmit(reservationData);
+  };
 
-    const handleTimeChange = (e) => {
-        setTime(e.target.value);
-    };
-
-    const handleSubmit = () => {
-        if (date && time) {
-            onSubmit({ date, time });
-        } else {
-            alert("Por favor, selecciona una fecha y una hora.");
-        }
-    };
-
-    return (
-        <div>
-            <h2>Reserva en Kansas</h2>
-            <label>
-                Fecha:
-                <select value={date} onChange={handleDateChange}>
-                    <option value="">Seleccionar Fecha</option>
-                    <option value="2024-10-14">Hoy (14 Oct)</option>
-                    <option value="2024-10-15">Mañana (15 Oct)</option>
-                    <option value="2024-10-16">Pasado Mañana (16 Oct)</option>
-                </select>
-            </label>
-            <label>
-                Hora:
-                <select value={time} onChange={handleTimeChange}>
-                    <option value="">Seleccionar Hora</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="19:00">7:00 PM</option>
-                </select>
-            </label>
-            <button onClick={handleSubmit}>Reservar</button>
-        </div>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Reserva de Mesa</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <div>
+        <label>
+          Nombre:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+        </label>
+      </div>
+      <div>
+        <label>
+          Fecha:
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+        </label>
+      </div>
+      <div>
+        <label>
+          Hora:
+          <select value={time} onChange={(e) => setTime(e.target.value)} required>
+            <option value="">Seleccione una hora</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          Número de Invitados:
+          <input type="number" value={guests} onChange={(e) => setGuests(e.target.value)} required />
+        </label>
+      </div>
+      <button type="submit" disabled={loading}>
+        {loading ? 'Cargando...' : 'Hacer Reserva'}
+      </button>
+      <button type="button" onClick={onClose}>Cancelar</button>
+    </form>
+  );
 };
 
 export default ReservationForm;
