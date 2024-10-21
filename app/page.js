@@ -6,12 +6,13 @@ import Modal from './components/Modal/Modal';
 import EventForm from './components/EventForm/EventForm';
 import NavBar from './components/NavBar/NavBar';
 import ScroopyMessageForm from './components/ScroopyMessageForm/ScroopyMessageForm';
-import { useReservation } from '../hooks/useReservation';
+import ScroopyReservationForm from './components/ScroopyReservationForm/ScroopyReservationForm';
 import { useEvents } from '@/hooks/useEvents';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
@@ -34,6 +35,13 @@ const Home = () => {
   const handleCloseMessageModal = () => {
     setIsMessageModalOpen(false);
   };
+  const handleOpenReservationModal = () => {
+    setIsReservationModalOpen(true);
+  };
+
+  const handleCloseReservationModal = () => {
+    setIsReservationModalOpen(false);
+  };
 
   const handleAddEvent = (event) => {
     alert(`Evento agregado: ${event.titulo} el ${event.fecha}`);
@@ -48,18 +56,7 @@ const Home = () => {
     setYear(newYear);
   };
 
-  const handleReservation = async () => {
-    try {
-      const success = await useReservation();
-      if (success) {
-        alert("Reserva realizada con éxito.");
-      } else {
-        alert("Error al realizar la reserva!!.");
-      }
-    } catch (error) {
-      alert("Error al realizar la reserva!!.");
-    }
-  };
+
 
   return (
     <div className="App">
@@ -73,13 +70,16 @@ const Home = () => {
         />
         <Button text="Agregar Evento" onClick={() => handleOpenModal(<EventForm onSubmit={handleAddEvent} />)} />
         <Button text="Enviar Scroopy Message" onClick={handleOpenMessageModal} />
-        <Button text="Hacer Reserva" onClick={handleReservation} />
+        <Button text="Hacer Reserva" onClick={handleOpenReservationModal} />
       </header>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {modalContent}
       </Modal>
       <Modal isOpen={isMessageModalOpen} onClose={handleCloseMessageModal}>
         <ScroopyMessageForm onClose={handleCloseMessageModal} />
+      </Modal>
+      <Modal isOpen={isReservationModalOpen} onClose={handleCloseReservationModal}>
+        <ScroopyReservationForm onClose={handleCloseReservationModal} />
       </Modal>
       <Calendario year={year} month={month} events={EventosDeUsuario} />
     </div>

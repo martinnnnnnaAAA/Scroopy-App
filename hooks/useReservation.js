@@ -1,24 +1,35 @@
-// hooks/useReservation.js
-export const useReservation = async ({ name, phone, date, time, guests }) => {
-    alert('si')
+import { useState } from 'react';
+
+export function useReservation() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const makeReservation = async (formData) => {
+    setIsLoading(true);
     try {
-      const response = await fetch('../api/reservation', {
+      console.log('Sending reservation request with data:', formData);
+      const response = await fetch('/api/reservation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, phone, date, time, guests }),
+        body: JSON.stringify(formData),
       });
-  
-      if (response.ok) {
-        const data = await response.json();
-        return { success: true, message: data.message };
-      } else {
-        throw new Error('Error al realizar la reserva.');
+
+      const data = await response.json();
+      console.log('Received response:', data);
+
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP error! status: ${response.status}`);
       }
+
+      return data.success;
     } catch (error) {
-      console.error(error);
-      return { success: false, message: 'Error al realizar la reserva.' };
+      console.error('Error in makeReservation:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
-  
+
+  return { makeReservation, isLoading };
+}

@@ -1,40 +1,45 @@
-// pages/api/reservation.js
+import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
-alert('hola')
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { name, phone, date, time, guests } = req.body;
 
-    try {
-      const browser = await puppeteer.launch({ headless: true });
-      const page = await browser.newPage();
-      
-      await page.goto('https://google.com/', { waitUntil: 'load' });
+export async function POST(request) {
+  try {
+    const { date, location, guest, time, first_name, last_name, email, telephone } = await request.json();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+    const page = await browser.newPage();
 
-      await page.type('#date', date);
-      
-      await page.type('#location', location);
-      await page.select('#location', location);
+    await page.goto(`https://reservaskansas.com.ar/palermo/reservation?picker_step=2&location=1&date=${date.toString()}&time=${time}&guest=${guest}&sdateTime=${date.toString()}+${time}`);
 
-      await page.type('#guest', guests);
-      await page.select('#guest', guests);
+    // Completar el formulario en la página web
+    await page.type('input[name="first_name"]', first_name);
+    await page.type('input[name="last_name"]', last_name);
+    await page.type('input[name="email"]', email);
+    await page.type('input[name="telephone"]', telephone);
 
-      await page.type('#time', time);
-      await page.select('#time', time);
+    // Enviar formulario
+    await page.click('button[type="submit"]');
+    await page.waitForNavigation();
 
+    const confirmationMessage = await page.evaluate(() => {
+      return document.querySelector('.confirmation-message')?.innerText || 'No se encontró mensaje de confirmación';
+    });
 
-      await page.type('#nombre', name);
-      await page.type('#telefono', phone);
-      await page.click('#submit-reservation'); // Ajusta el selector según el sitio web
-      await page.waitForNavigation();
+    await browser.close();
 
-      await browser.close();
-      res.status(200).json({ message: 'Reserva realizada con éxito' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al realizar la reserva.' });
-    }
-  } else {
-    res.status(405).json({ message: 'Método no permitido' });
+    return NextResponse.json({
+      success: true,
+      data: { confirmationMessage },
+    });
+  } catch (error) {
+    console.error('Scraping error:', error); // Mostrará el error específico en la consola del servidor
+    return NextResponse.json(
+      {
+        success: false,
+        error: `Error al procesar la reserva: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }
