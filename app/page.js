@@ -7,12 +7,14 @@ import EventForm from './components/EventForm/EventForm';
 import NavBar from './components/NavBar/NavBar';
 import ScroopyMessageForm from './components/ScroopyMessageForm/ScroopyMessageForm';
 import ScroopyReservationForm from './components/ScroopyReservationForm/ScroopyReservationForm';
+import EmailForm from './components/EmailForm/EmailForm';
 import { useEvents } from '@/hooks/useEvents';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth());
@@ -56,7 +58,9 @@ const Home = () => {
     setYear(newYear);
   };
 
-
+  const handleEmailModalToggle = () => {
+    setIsEmailModalOpen(!isEmailModalOpen);
+  };
 
   return (
     <div className="App">
@@ -71,6 +75,7 @@ const Home = () => {
         <Button text="Agregar Evento" onClick={() => handleOpenModal(<EventForm onSubmit={handleAddEvent} />)} />
         <Button text="Enviar Scroopy Message" onClick={handleOpenMessageModal} />
         <Button text="Hacer Reserva" onClick={handleOpenReservationModal} />
+        <Button text="Send Email" onClick={handleEmailModalToggle} />
       </header>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {modalContent}
@@ -80,6 +85,9 @@ const Home = () => {
       </Modal>
       <Modal isOpen={isReservationModalOpen} onClose={handleCloseReservationModal}>
         <ScroopyReservationForm onClose={handleCloseReservationModal} />
+      </Modal>
+      <Modal isOpen={isEmailModalOpen} onClose={handleEmailModalToggle}>
+        <EmailForm onClose={handleEmailModalToggle} />
       </Modal>
       <Calendario year={year} month={month} events={EventosDeUsuario} />
     </div>
